@@ -1,0 +1,91 @@
+<script>
+var Take = require("Take");
+var TakeView = require("TakeView");
+var Camera = require("Camera");
+</script>
+
+<div id="take" class="nav" style="width: 100%; height: 100%;">
+  <table border="0" cellpadding="2" cellspacing="3" width="100%">
+    <tr>
+      <td colspan="2" class="pane">
+        <table border="0" cellpadding="2" cellspacing="3">
+          <tr>
+            <td class="label">Scene: </td>
+            <td id="take-scene" class="right-border"></td>
+            <td class="label">Take: </td>
+            <td id="take-take" class="right-border"></td>
+            <td class="label">Resolution: </td>
+            <td id="take-resolution" class="right-border"></td>
+            <td class="label">Frames Per Second: </td>
+            <td id="take-fps"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td class="pane" NOWRAP>{{> screen screenNum=1 }}</td>
+      <td class="pane" NOWRAP>{{> screen screenNum=2 }}</td>
+    </tr>
+    <tr>
+      <td id="frames-pane" colspan="2" class="pane">
+        <i class="fa fa-film"></i> Frames:
+          <button id="frame-remove">Remove <i class="fa fa-trash"></i></button>
+          <button id="frame-insert">Insert <i class="fa fa-plus-square"></i></button>
+          <button id="render">Render Video <i class="fa fa-file-video-o"></i></button>
+        <br>
+        <div id="frames-div" style="width: 600px; overflow-x: scroll;">
+        <table border="1" cellpadding="1" cellspacing="0">
+          <tr id="frames-timeline"></tr>
+          <tr id="frames-images"></tr>
+          <tr id="frames-notes"></tr>
+        </table>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<script>
+var currentTake = null;
+function takeSetCurrent(take) {
+  currentTake = take;
+
+  $("#take-scene")[0].innerHTML = currentTake.scene;
+  $("#take-take")[0].innerHTML = currentTake.take;
+  $("#take-resolution")[0].innerHTML = currentTake.resolution;
+  $("#take-fps")[0].innerHTML = currentTake.fps;
+
+  drawFrames();
+
+  Nav.primary("take");
+}
+
+$("#frame-remove").on("click", function() {
+  if (confirm("Are you sure you want to remove frame " + currentTake.currentFrame + "?")) {
+    Take.removeCurrentFrame(currentTake, function(newTake) {
+      takeSetCurrent(newTake);
+    });
+  }
+});
+
+$("#frame-insert").on("click", function() {
+  Take.insertAtCurrentFrame(currentTake, function(newTake) {
+    takeSetCurrent(newTake);
+  });
+});
+
+$("#render").on("click", function() {
+  Take.render(currentTake, function(newTake) {
+    takeSetCurrent(newTake);
+  });
+});
+
+$("#frames-div")[0].style.width = ($("#frames-pane")[0].clientWidth - 8) + "px";
+function drawFrames() {
+  function frameClicked(frameNum) {
+    currentTake.currentFrame = frameNum;
+    drawFrames();
+  }
+  TakeView.drawFrames(currentTake, $("#frames-timeline")[0], $("#frames-images")[0], $("#frames-notes")[0], frameClicked);
+}
+</script>

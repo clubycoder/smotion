@@ -1,0 +1,30 @@
+{
+  "name": "smotion",
+  "version": "1.0.0",
+  "description": "Stop Motion Animation in a Web Browser",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clubycoder/smotion.git"
+  },
+  "author": "Chris Luby",
+  "license": "AGPL-3.0",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/clubycoder/smotion/issues"
+  },
+  "homepage": "https://github.com/clubycoder/smotion#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "mkdirp": "^0.5.1",
+    "uuid-1345": "^0.99.6"
+  },
+  "devDependencies": {}
+}

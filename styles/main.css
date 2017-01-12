@@ -1,0 +1,175 @@
+/*
+ * SMotion - Stop Motion Animation in a Web Browser
+ * Copyright (C) 2017 Chris Luby <clubycoder@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+ html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  color: #FFFFFF;
+  background-color: #333333;
+  font-family: Helvetica, FontAwesome, Geneva, Arial, SunSans-Regular, sans-serif;
+  font-size: 16px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.pane {
+  border: 2px solid #666666;
+  border-radius: 8px;
+}
+
+.framed {
+  background-color: #333333;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  padding: 3px 3px;
+}
+
+.nobullet {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul.paned {
+  margin: 3px 0 0 0;
+}
+.paned > li {
+  border: 2px solid #666666;
+  border-radius: 8px;
+  margin: 0 0 3px 0;
+}
+
+hr {
+  margin: 0 0 0 0;
+}
+
+button {
+  background-color: #333333;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  color: white;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+button:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+button:focus {
+  outline: 0;
+}
+
+.tight {
+  border-radius: 8px;
+  padding: 0px 4px;
+}
+
+select {
+  background-color: #333333;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+}
+
+input[type=text] {
+  background-color: #333333;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+}
+
+input[type=number] {
+  background-color: #333333;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  text-align: right;
+}
+
+input[type=color] {
+  background-color: #333333;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  color: white;
+}
+
+input[type=range] {
+  background-color: #333333;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  color: white;
+  width: 64px;
+}
+
+textarea {
+  background-color: #333333;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+}
+
+.console {
+  background-color: #333333;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  padding: 2px 2px;
+  color: white;
+  font-family: monospace;
+  font-size: 16px;
+  white-space: pre;
+  display: block;
+  unicode-bidi: embed;
+  overflow: auto;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #333333;
+    margin: 15% auto; /* 15% from the top and centered */
+}
+
+.right-border {
+  border-right: solid 2px #999999;
+}
+.left-border {
+  border-left: solid 2px #999999;
+}

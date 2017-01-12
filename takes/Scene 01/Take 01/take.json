@@ -1,0 +1,77 @@
+{
+  "scene": "Scene 01",
+  "take": "Take 01",
+  "resolution": "720p",
+  "fps": 12,
+  "currentFrame": 16,
+  "frames": [
+    {
+      "image": "Scene 01/Take 01/images/00000000.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000001.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000002.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000003.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000004.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000005.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000006.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000007.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000008.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000009.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000010.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000011.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000012.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000013.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000014.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000015.png",
+      "notes": ""
+    },
+    {
+      "image": "Scene 01/Take 01/images/00000016.png",
+      "notes": ""
+    }
+  ]
+}

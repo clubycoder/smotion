@@ -1,0 +1,7 @@
+{
+	"port": 54321,
+	"takesDir": "./takes",
+	"tools": {
+		"ffmpeg": "./tools/macos/ffmpeg/ffmpeg"
+	}
+}

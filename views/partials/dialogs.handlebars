@@ -1,0 +1,120 @@
+<script>
+var Take = require("Take");
+</script>
+
+<div id="dialog-new-take" class="modal">
+  <table border="0" cellpadding="4" cellspacing="0" class="modal-content framed">
+    <tr>
+      <td class="label">Scene: </td>
+      <td><input type="text" id="dialog-new-take-scene" size="75" value="Temp Scene 01" /></td>
+      <td class="label">Resolution: </td>
+      <td>
+        <select id="dialog-new-take-resolution">
+          <option value="360p">360p</option>
+          <option value="720p" SELECTED>720p</option>
+          <option value="1080p">1080p</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">Take: </td>
+      <td><input type="text" id="dialog-new-take-take" size="75" value="Take 01" /></td>
+      <td class="label">Frames Per Second: </td>
+      <td>
+        <select id="dialog-new-take-fps">
+          <option value="8" SELECTED>8</option>
+          <option value="12">12</option>
+          <option value="24">24</option>
+          <option value="30">30</option>
+          <option value="60">60</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" style="border-top: 2px solid #FFFFFF;">
+        <button id="dialog-new-take-create"><i class="fa fa-film"></i> Create <i class="fa fa-plus-square"></i></button>
+        <button id="dialog-new-take-cancel">Cancel <i class="fa fa-ban"></i></button><br>
+        <span id="dialog-new-take-error" style="color: #FF0000; display: none;"></span>
+      </td>
+    </tr>
+  </table>
+</div>
+<script>
+function dialogNewTake() {
+  $("#dialog-new-take-error")[0].innerHTML = "";
+  $("#dialog-new-take-error")[0].style.display = "none";
+  $("#dialog-new-take-scene")[0].value = "";
+  $("#dialog-new-take-take")[0].value = "";
+  $("#dialog-new-take-scene")[0].focus();
+  $("#dialog-new-take")[0].style.display = "block";
+}
+var regexNameMin = /^[A-Za-z]/;
+var regexNameValid = /^[A-Za-z0-9 \-_]*$/;
+function dialogNewTakeVerify() {
+  var scene = $("#dialog-new-take-scene")[0].value;
+  var takeName = $("#dialog-new-take-take")[0].value;
+  if ((!scene.match(regexNameMin)) || (!scene.match(regexNameValid))) {
+    $("#dialog-new-take-error")[0].innerHTML = "Invalide scene name!";
+    $("#dialog-new-take-error")[0].style.display = "block";
+    return false;
+  }
+  if ((!takeName.match(regexNameMin)) || (!takeName.match(regexNameValid))) {
+    $("#dialog-new-take-error")[0].innerHTML = "Invalide take name!";
+    $("#dialog-new-take-error")[0].style.display = "block";
+    return false;
+  }
+  return true;
+}
+$("#dialog-new-take-create").on("click", function() {
+  if (dialogNewTakeVerify()) {
+    var scene = $("#dialog-new-take-scene")[0].value;
+    var takeName = $("#dialog-new-take-take")[0].value;
+    var resolutionSelect = $("#dialog-new-take-resolution")[0];
+    var resolution = resolutionSelect.options[resolutionSelect.selectedIndex].value;
+    var fpsSelect = $("#dialog-new-take-fps")[0];
+    var fps = parseInt(fpsSelect.options[fpsSelect.selectedIndex].value);
+    $("#dialog-new-take")[0].style.display = "none";
+    Take.newTake(scene, takeName, resolution, fps, function(take) {
+      takeSetCurrent(take);
+    }, function(err) {
+      alert(err);
+    });
+  }
+});
+$("#dialog-new-take-cancel").on("click", function() {
+  $("#dialog-new-take")[0].style.display = "none";
+});
+</script>
+
+<div id="dialog-copy-take" class="modal">
+  <table border="0" cellpadding="4" cellspacing="0" class="modal-content framed">
+    <tr>
+      <td class="label">Scene: </td>
+      <td><input type="text" id="scene" size="75" value="Temp Scene 01" /></td>
+    </tr>
+    <tr>
+      <td class="label">Take: </td>
+      <td><input type="text" id="takeName" size="75" value="Take 01 (Copy)" /></td>
+      <td class="label">Frames Per Second: </td>
+      <td>
+        <select id="fps">
+          <option value="8" SELECTED>8</option>
+          <option value="12">12</option>
+          <option value="24">24</option>
+          <option value="30">30</option>
+          <option value="60">60</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" style="border-top: 2px solid #FFFFFF;">
+        <button id="dialog-copy-take-copy"><i class="fa fa-film"></i> Copy <i class="fa fa-clone"></i></button>
+        <button id="dialog-copy-take-cancel">Cancel <i class="fa fa-ban"></i></button><br>
+      </td>
+    </tr>
+  </table>
+</div>
+<script>
+function dialogCopyTake() {
+}
+</script>
