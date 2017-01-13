@@ -19,15 +19,18 @@
 var API = require("API");
 
 module.exports = {
-  "newTake": function(scene, takeName, resolution, fps, takeToCopy, onNewTake, onError) {
-    var take = {
-      "scene": scene,
-      "take": takeName,
-      "resolution": resolution,
-      "fps": fps,
+  "getEmptyTake": function(scene, takeName, resolution, fps) {
+    return {
+      "scene": (scene ? scene : ""),
+      "take": (takeName ? takeName : ""),
+      "resolution": (resolution ? resolution : "720p"),
+      "fps": (fps ? fps : 24),
       "currentFrame": 0,
       "frames": []
     };
+  },
+  "newTake": function(scene, takeName, resolution, fps, takeToCopy, onNewTake, onError) {
+    var take = this.getEmptyTake(scene, takeName, resolution, fps);
     API.call("/take", "put", {
       "take": take,
       "takeToCopy": (takeToCopy ? takeToCopy : undefined)

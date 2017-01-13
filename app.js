@@ -75,6 +75,18 @@ httpServer.put("/take", function(req, res) {
 	}
 });
 
+httpServer.delete("/take", function(req, res) {
+	var take = req.body.take;
+	console.log("IN: ", JSON.stringify(take, null, 2));
+	try {
+		Take.deleteTake(config, take);
+		res.send({});
+	} catch (e) {
+		console.log("ERR: ", e.toString());
+		res.send({"err": e.toString()});
+	}
+});
+
 httpServer.delete("/take/frame", function(req, res) {
 	var take = req.body.take;
 	console.log("IN: ", JSON.stringify(take, null, 2));

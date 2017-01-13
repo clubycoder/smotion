@@ -50,22 +50,32 @@ var currentTake = null;
 function takeSetCurrent(take) {
   currentTake = take;
 
-  $("#take-scene")[0].innerHTML = currentTake.scene;
-  $("#take-take")[0].innerHTML = currentTake.take;
-  $("#take-resolution")[0].innerHTML = currentTake.resolution;
-  $("#take-fps")[0].innerHTML = currentTake.fps;
+  $("#take-scene")[0].innerHTML = (currentTake ? currentTake.scene : "");
+  $("#take-take")[0].innerHTML = (currentTake ? currentTake.take : "");
+  $("#take-resolution")[0].innerHTML = (currentTake ? currentTake.resolution : "");
+  $("#take-fps")[0].innerHTML = (currentTake ? currentTake.fps : "");
 
   drawFrames();
 
-  Nav.primary("take");
+  if (currentTake) {
+    Nav.primary("take");
+  } else {
+    Nav.primary("takes");
+  }
 }
 
+$("#navitem-take").on("click", function() {
+  if (!currentTake) {
+    Nav.primary("takes");
+  }
+});
+
 $("#frame-remove").on("click", function() {
-  if (confirm("Are you sure you want to remove frame " + currentTake.currentFrame + "?")) {
+  dialogConfirm("Are you sure you want to remove frame " + currentTake.currentFrame + "?", function() {
     Take.removeCurrentFrame(currentTake, function(newTake) {
       takeSetCurrent(newTake);
     });
-  }
+  });
 });
 
 $("#frame-insert").on("click", function() {
@@ -86,6 +96,12 @@ function drawFrames() {
     currentTake.currentFrame = frameNum;
     drawFrames();
   }
-  TakeView.drawFrames(currentTake, $("#frames-timeline")[0], $("#frames-images")[0], $("#frames-notes")[0], frameClicked);
+  TakeView.drawFrames(
+    (currentTake ? currentTake : Take.getEmptyTake()),
+    $("#frames-timeline")[0],
+    $("#frames-images")[0],
+    $("#frames-notes")[0],
+    frameClicked
+  );
 }
 </script>

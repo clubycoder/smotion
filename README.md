@@ -13,7 +13,7 @@ means my kids can use it too :-).
 Functionality
 -------------
 
-* Management of projects / takes (New and Copy)
+* Management of projects / takes (New, Open, Copy, Delete)
 * 2 virtual screens
 * Viewing and capturing from 2 cameras configured per virtual screen
 * Configurable resolution (360p, 720p, or 1080p)
@@ -28,7 +28,6 @@ Functionality
 Coming "Soon"
 -------------
 
-* Delete take
 * Importing external images for frames
 * Integrated frame editing in [Gimp](https://www.gimp.org/)
 * Adding notes to frames for planning

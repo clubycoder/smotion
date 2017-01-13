@@ -23,7 +23,14 @@ function takeListCopy(takeNum) {
 
 function takeListDelete(takeNum) {
 	var take = takes[takeNum].take;
-	dialogDeleteTake(take);
+	dialogConfirm("Are you sure you want to delete " + take.scene + " - " + take.take + "?", function() {
+    Take.deleteTake(take, function() {
+      reloadTakes();
+      takeSetCurrent(undefined);
+    }, function(err) {
+      alert("Error deleting take! " + err);
+    });
+  });
 }
 
 function reloadTakes() {
@@ -31,7 +38,7 @@ function reloadTakes() {
 		window.takes = takes;
 		TakesView.drawTakes(takes, $("#take-list")[0]);
 	}, function(err) {
-		alert("Error loading takes! " + error);
+		alert("Error loading takes! " + err);
 	});
 }
 

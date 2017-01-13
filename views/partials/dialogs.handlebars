@@ -98,3 +98,32 @@ $("#dialog-new-take-cancel").on("click", function() {
   $("#dialog-new-take")[0].style.display = "none";
 });
 </script>
+
+<div id="dialog-confirm" class="modal">
+  <table border="0" cellpadding="4" cellspacing="0" class="modal-content framed">
+    <tr>
+      <td id="dialog-confirm-message" class="label" valign="bottom">???</td>
+      <td class="label"><i class="fa fa-question-circle fa-3" aria-hidden="true"></i></td>
+    </tr>
+    <tr>
+      <td colspan="2" style="border-top: 2px solid #FFFFFF;">
+        <button id="dialog-confirm-ok">Ok <i class="fa fa-check-square-o"></i></button>
+        <button id="dialog-confirm-cancel">Cancel <i class="fa fa-ban"></i></button><br>
+      </td>
+    </tr>
+  </table>
+</div>
+<script>
+function dialogConfirm(message, onConfirm) {
+  $("#dialog-confirm-message")[0].innerHTML = message;
+  $("#dialog-confirm-ok")[0].onConfirm = onConfirm;
+  $("#dialog-confirm")[0].style.display = "block";
+}
+$("#dialog-confirm-ok").on("click", function() {
+  this.onConfirm();
+  $("#dialog-confirm")[0].style.display = "none";
+});
+$("#dialog-confirm-cancel").on("click", function() {
+  $("#dialog-confirm")[0].style.display = "none";
+});
+</script>
