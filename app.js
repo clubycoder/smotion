@@ -23,7 +23,7 @@ var handlebars = require('express-handlebars');
 
 var package = require("./package.json");
 var config = require("./config/config.json");
-var Take = require("./lib/take.js");
+var Take = require("./lib/Take.js");
 
 // HTTP Server
 var httpServer = express();
@@ -47,7 +47,7 @@ httpServer.use(["/favicon*", "/apple-touch-icon-*", "/mstile-*"], function (req,
 
 httpServer.get("/", function(req, res) {
   var data = {
-    "title": `${package.description} - Home`
+    "title": package.description
   };
   res.render("home", data);
 });
@@ -60,9 +60,13 @@ httpServer.get("/take/list", function(req, res) {
 
 httpServer.put("/take", function(req, res) {
 	var take = req.body.take;
+	var takeToCopy = req.body.takeToCopy;
 	console.log("IN: ", JSON.stringify(take, null, 2));
+  if (takeToCopy) {
+	   console.log("COPY: ", JSON.stringify(takeToCopy, null, 2));
+  }
 	try {
-		var newTake = Take.newTake(config, take);
+		var newTake = Take.newTake(config, take, takeToCopy);
 		console.log("OUT: ", JSON.stringify(newTake, null, 2));
 		res.send({"take": newTake});
 	} catch (e) {

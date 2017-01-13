@@ -19,10 +19,10 @@
 var Take = require("Take");
 
 module.exports = {
-  "getFrameImageURL": function(frame) {
+  "getFrameImageURL": function(take, frame) {
     var imageURL = frame.image;
     if (imageURL.indexOf("frame-default.png") < 0) {
-      imageURL = "/takes/" + imageURL + "?rnd=" + Math.random();
+      imageURL = "/takes/" + take.dir + "/" + imageURL + "?rnd=" + Math.random();
     }
     return imageURL;
   },
@@ -31,6 +31,9 @@ module.exports = {
     var imageObject = undefined;
     if (imageObjectSelector) {
       imageObject = imageObjectSelector[0];
+    } else if ((take.frames) && (take.frames.length > frameNum)) {
+      imageObject = new Image();
+      imageObject.src = this.getFrameImageURL(take, take.frames[frameNum]);
     }
     return imageObject;
   },
@@ -94,7 +97,7 @@ module.exports = {
       } else {
         imageCell.style.backgroundColor = "";
       }
-      imageCell.innerHTML = "<img id=\"take-frame-" + i + "\" src=\"" + this.getFrameImageURL(frame) + "\" width=\"160\" height=\"90\" />";
+      imageCell.innerHTML = "<img id=\"take-frame-" + i + "\" src=\"" + this.getFrameImageURL(take, frame) + "\" width=\"160\" height=\"90\" />";
       imageCell = imageCell.nextSibling;
 
       if (!noteCell) {

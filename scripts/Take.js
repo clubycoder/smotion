@@ -19,7 +19,7 @@
 var API = require("API");
 
 module.exports = {
-  "newTake": function(scene, takeName, resolution, fps, onNewTake, onError) {
+  "newTake": function(scene, takeName, resolution, fps, takeToCopy, onNewTake, onError) {
     var take = {
       "scene": scene,
       "take": takeName,
@@ -29,7 +29,8 @@ module.exports = {
       "frames": []
     };
     API.call("/take", "put", {
-      "take": take
+      "take": take,
+      "takeToCopy": (takeToCopy ? takeToCopy : undefined)
     }, onNewTake, onError);
   },
   "saveTake": function(take, onUpdate, onError) {

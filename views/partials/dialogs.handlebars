@@ -7,7 +7,7 @@ var Take = require("Take");
     <tr>
       <td class="label">Scene: </td>
       <td><input type="text" id="dialog-new-take-scene" size="75" value="Temp Scene 01" /></td>
-      <td class="label">Resolution: </td>
+      <td class="label"><span id="dialog-new-take-resolution-label">Resolution: </span></td>
       <td>
         <select id="dialog-new-take-resolution">
           <option value="360p">360p</option>
@@ -40,12 +40,25 @@ var Take = require("Take");
   </table>
 </div>
 <script>
-function dialogNewTake() {
+function dialogNewTake(take) {
   $("#dialog-new-take-error")[0].innerHTML = "";
   $("#dialog-new-take-error")[0].style.display = "none";
-  $("#dialog-new-take-scene")[0].value = "";
-  $("#dialog-new-take-take")[0].value = "";
+  $("#dialog-new-take-scene")[0].value = (take ? take.scene : "");
+  $("#dialog-new-take-take")[0].value = (take ? take.take + " - Copy" : "");
   $("#dialog-new-take-scene")[0].focus();
+  if (take) {
+    $("#dialog-new-take-resolution").val(take.resolution);
+    $("#dialog-new-take-resolution-label")[0].style.display = "none";
+    $("#dialog-new-take-resolution")[0].style.display = "none";
+    $("#dialog-new-take-fps").val(take.fps);
+    $("#dialog-new-take-create")[0].innerHTML = "<i class=\"fa fa-film\"></i> Copy <i class=\"fa fa-clone\"></i>";
+    $("#dialog-new-take-create")[0].takeToCopy = take;
+  } else {
+    $("#dialog-new-take-resolution-label")[0].style.display = "block";
+    $("#dialog-new-take-resolution")[0].style.display = "block";
+    $("#dialog-new-take-create")[0].innerHTML = "<i class=\"fa fa-film\"></i> Create <i class=\"fa fa-plus-square\"></i>";
+    $("#dialog-new-take-create")[0].takeToCopy = undefined;
+  }
   $("#dialog-new-take")[0].style.display = "block";
 }
 var regexNameMin = /^[A-Za-z]/;
@@ -74,7 +87,7 @@ $("#dialog-new-take-create").on("click", function() {
     var fpsSelect = $("#dialog-new-take-fps")[0];
     var fps = parseInt(fpsSelect.options[fpsSelect.selectedIndex].value);
     $("#dialog-new-take")[0].style.display = "none";
-    Take.newTake(scene, takeName, resolution, fps, function(take) {
+    Take.newTake(scene, takeName, resolution, fps, this.takeToCopy, function(take) {
       takeSetCurrent(take);
     }, function(err) {
       alert(err);
@@ -84,37 +97,4 @@ $("#dialog-new-take-create").on("click", function() {
 $("#dialog-new-take-cancel").on("click", function() {
   $("#dialog-new-take")[0].style.display = "none";
 });
-</script>
-
-<div id="dialog-copy-take" class="modal">
-  <table border="0" cellpadding="4" cellspacing="0" class="modal-content framed">
-    <tr>
-      <td class="label">Scene: </td>
-      <td><input type="text" id="scene" size="75" value="Temp Scene 01" /></td>
-    </tr>
-    <tr>
-      <td class="label">Take: </td>
-      <td><input type="text" id="takeName" size="75" value="Take 01 (Copy)" /></td>
-      <td class="label">Frames Per Second: </td>
-      <td>
-        <select id="fps">
-          <option value="8" SELECTED>8</option>
-          <option value="12">12</option>
-          <option value="24">24</option>
-          <option value="30">30</option>
-          <option value="60">60</option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" style="border-top: 2px solid #FFFFFF;">
-        <button id="dialog-copy-take-copy"><i class="fa fa-film"></i> Copy <i class="fa fa-clone"></i></button>
-        <button id="dialog-copy-take-cancel">Cancel <i class="fa fa-ban"></i></button><br>
-      </td>
-    </tr>
-  </table>
-</div>
-<script>
-function dialogCopyTake() {
-}
 </script>

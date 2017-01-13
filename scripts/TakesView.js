@@ -38,15 +38,15 @@ module.exports = {
           var time = ((1000 / take.fps) * take.frames.length);
           length = TakeView.buildTimeLabel(time) + " / " + take.frames.length + " frames";
           if (take.frames[0].image) {
-            firstFrame = "<img src=\"" + TakeView.getFrameImageURL(take.frames[0]) + "\" width=\"160\" height=\"90\" />";
+            firstFrame = "<img src=\"" + TakeView.getFrameImageURL(take, take.frames[0]) + "\" width=\"160\" height=\"90\" />";
           }
           var middleFrameNum = Math.ceil(take.frames.length / 2);
           if ((take.frames.length > 2) && (take.frames[middleFrameNum].image)) {
-            middleFrame = "<img src=\"" + TakeView.getFrameImageURL(take.frames[middleFrameNum]) + "\" width=\"160\" height=\"90\" />";
+            middleFrame = "<img src=\"" + TakeView.getFrameImageURL(take, take.frames[middleFrameNum]) + "\" width=\"160\" height=\"90\" />";
           }
           var lastFrameNum = (take.frames.length - 1);
           if ((take.frames.length > 1) && (take.frames[lastFrameNum].image)) {
-            lastFrame = "<img src=\"" + TakeView.getFrameImageURL(take.frames[lastFrameNum]) + "\" width=\"160\" height=\"90\" />";
+            lastFrame = "<img src=\"" + TakeView.getFrameImageURL(take, take.frames[lastFrameNum]) + "\" width=\"160\" height=\"90\" />";
           }
         }
         li.innerHTML = "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
