@@ -107,6 +107,9 @@ module.exports = {
         noteCell.align = "left";
         notesRow.appendChild(noteCell);
       }
+      while (noteCell.firstChild) {
+        noteCell.removeChild(noteCell.firstChild);
+      }
       let note = document.createElement("textarea");
       note.value = frame.note;
       note.onchange = function() {
@@ -118,17 +121,17 @@ module.exports = {
       time += timeStep;
     }
     while (timelineCell) {
-      nextCell = timelineCell.nextSibling;
+      let nextCell = timelineCell.nextSibling;
       timelineRow.removeChild(timelineCell);
       timelineCell = nextCell;
     }
     while (imageCell) {
-      nextCell = imageCell.nextSibling;
+      let nextCell = imageCell.nextSibling;
       imagesRow.removeChild(imageCell);
       imageCell = nextCell;
     }
     while (noteCell) {
-      nextCell = noteCell.nextSibling;
+      let nextCell = noteCell.nextSibling;
       notesRow.removeChild(noteCell);
       noteCell = nextCell;
     }
