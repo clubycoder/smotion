@@ -22,7 +22,7 @@ const TakeView = require("TakeView");
 
 module.exports = {
   "drawTakes": function(takes, table) {
-    while ((table.rows) && (table.rows > 0)) {
+    while ((table.rows) && (table.rows.length > 0)) {
       table.deleteRow(0);
     }
     for (let takeNum = 0; takeNum < takes.length; takeNum++) {
