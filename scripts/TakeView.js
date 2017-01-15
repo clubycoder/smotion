@@ -97,7 +97,9 @@ module.exports = {
       } else {
         imageCell.style.backgroundColor = "";
       }
-      imageCell.innerHTML = "<img id=\"take-frame-" + i + "\" src=\"" + this.getFrameImageURL(take, frame) + "\" width=\"160\" height=\"90\" />";
+      imageCell.innerHTML = ""
+        + "<img id=\"take-frame-" + i + "\" src=\"" + this.getFrameImageURL(take, frame) + "\" width=\"160\" height=\"90\" />"
+      ;
       imageCell = imageCell.nextSibling;
 
       if (!noteCell) {
@@ -125,5 +127,9 @@ module.exports = {
       notesRow.removeChild(noteCell);
       noteCell = nextCell;
     }
-  }
+  },
+  "getVideoURL": function(take) {
+    var videoURL = "/takes/" + take.dir + "/" + take.video + "?rnd=" + Math.random();
+    return videoURL;
+  },
 };

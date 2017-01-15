@@ -15,25 +15,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+"use strict";
 
-var Takes = require("Takes");
-var TakeView = require("TakeView");
+const Takes = require("Takes");
+const TakeView = require("TakeView");
 
 module.exports = {
-  "drawTakes": function(takes, list) {
-    while (list.firstChild) {
-      list.removeChild(list.firstChild);
+  "drawTakes": function(takes, table) {
+    while ((table.rows) && (table.rows > 0)) {
+      table.deleteRow(0);
     }
-    for (var i = 0; i < takes.length; i++) {
-      var li = document.createElement("LI");
-      if (takes[i].err) {
-        li.innerHTML = takes[i].err;
+    for (let takeNum = 0; takeNum < takes.length; takeNum++) {
+      if (takes[takeNum].err) {
+        {let row = table.insertRow(-1);
+          {let cell = row.insertCell(-1);
+            cell.colSpan = 7;
+            cell.className = "pane";
+            cell.innerHTML = takes[takeNum].err;}
+        }
       } else {
-        var take = takes[i].take;
+        var take = takes[takeNum].take;
         var length = "No frames";
         var firstFrame = "";
         var middleFrame = "";
         var lastFrame = "";
+        var video = "";
         if ((take.frames) && (take.frames.length > 0)) {
           var time = ((1000 / take.fps) * take.frames.length);
           length = TakeView.buildTimeLabel(time) + " / " + take.frames.length + " frames";
@@ -49,26 +55,81 @@ module.exports = {
             lastFrame = "<img src=\"" + TakeView.getFrameImageURL(take, take.frames[lastFrameNum]) + "\" width=\"160\" height=\"90\" />";
           }
         }
-        li.innerHTML = "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
-        + "	<tr>"
-        + "		<td class=\"label\">Scene: </td><td>" + take.scene + "</td>"
-        + "		<td rowspan=\"5\" valign=\"center\" class=\"left-border right-border\" style=\"padding-left: 5px; padding-right: 5px;\">"
-        + "			<button onclick=\"takeListOpen(" + i + ");\" style=\"margin: 0 0 3px 0;\">Open <i class=\"fa fa-external-link\"></i></button><br>"
-        + "			<button onclick=\"takeListCopy(" + i + ");\" style=\"margin: 0 0 3px 0;\">Copy <i class=\"fa fa-clone\"></i></button><br>"
-        + "			<button onclick=\"takeListDelete(" + i + ");\" style=\"margin: 0 0 3px 0;\">Delete <i class=\"fa fa-trash\"></i></button><br>"
-        + "		</td>"
-        + "		<td rowspan=\"5\" valign=\"center\">" + firstFrame + "</td>"
-        + "		<td rowspan=\"5\" valign=\"center\">" + middleFrame + "</td>"
-        + "		<td rowspan=\"5\" valign=\"center\">" + lastFrame + "</td>"
-        + "	</tr>"
-        + "	<tr><td class=\"label\">Take: </td><td>" + take.take + "</td></tr>"
-        + "	<tr><td class=\"label\">Resolution: </td><td>" + take.resolution + "</td></tr>"
-        + "	<tr><td class=\"label\">Frames Per Second: </td><td>" + take.fps + "</td></tr>"
-        + "	<tr><td class=\"label\">Length: </td><td>" + length + "</td></tr>"
-        + "	</tr>"
-        + "</table>";
+        if (take.video) {
+          video = "<video width=\"180\" height=\"110\" controls loop>"
+            + "<source src=\"" + TakeView.getVideoURL(take) + "\" type=\"video/mp4\">"
+            + "</video>"
+          ;
+        }
+        {let row = table.insertRow(-1);
+          {let cell = row.insertCell(-1);
+            cell.className = "pane-top-left label";
+            cell.innerHTML = "Scene:";}
+          {let cell = row.insertCell(-1);
+            cell.className = "pane-top";
+            cell.innerHTML = take.scene;}
+          {let cell = row.insertCell(-1);
+            cell.rowSpan = 5;
+            cell.valign = "center";
+            cell.className = "pane-top pane-bottom left-border right-border";
+            cell.style.paddingLeft = "5px";
+            cell.style.paddingRight = "5px";
+            cell.innerHTML = ""
+              + "<button onclick=\"takeListOpen(" + takeNum + ");\" style=\"width: 100%; margin: 0 0 3px 0;\">Open <i class=\"fa fa-external-link\"></i></button><br>"
+              + "<button onclick=\"takeListCopy(" + takeNum + ");\" style=\"width: 100%; margin: 0 0 3px 0;\">Copy <i class=\"fa fa-clone\"></i></button><br>"
+              + "<button onclick=\"takeListDelete(" + takeNum + ");\" style=\"width: 100%; margin: 0 0 3px 0;\">Delete <i class=\"fa fa-trash\"></i></button><br>"
+            ;}
+          {let cell = row.insertCell(-1);
+            cell.rowSpan = 5;
+            cell.valign = "center";
+            cell.className = "pane-top pane-bottom";
+            cell.innerHTML = firstFrame;}
+          {let cell = row.insertCell(-1);
+            cell.rowSpan = 5;
+            cell.valign = "center";
+            cell.className = "pane-top pane-bottom";
+            cell.innerHTML = middleFrame;}
+          {let cell = row.insertCell(-1);
+            cell.rowSpan = 5;
+            cell.valign = "center";
+            cell.className = "pane-top pane-bottom";
+            cell.innerHTML = lastFrame;}
+          {let cell = row.insertCell(-1);
+            cell.rowSpan = 5;
+            cell.valign = "center";
+            cell.className = "pane-top-right pane-bottom-right left-border";
+            cell.innerHTML = video;}
+        }
+        {let row = table.insertRow(-1);
+          {let cell = row.insertCell(-1);
+            cell.className = "pane-left label";
+            cell.innerHTML = "Take:";}
+          {let cell = row.insertCell(-1);
+            cell.innerHTML = take.take;}
+        }
+        {let row = table.insertRow(-1);
+          {let cell = row.insertCell(-1);
+            cell.className = "pane-left label";
+            cell.innerHTML = "Resolution:";}
+          {let cell = row.insertCell(-1);
+            cell.innerHTML = take.resolution;}
+        }
+        {let row = table.insertRow(-1);
+          {let cell = row.insertCell(-1);
+            cell.className = "pane-left label";
+            cell.innerHTML = "Frames Per Second:";}
+          {let cell = row.insertCell(-1);
+            cell.innerHTML = take.fps;}
+        }
+        {let row = table.insertRow(-1);
+          {let cell = row.insertCell(-1);
+            cell.className = "pane-bottom-left label";
+            cell.innerHTML = "Length:";}
+          {let cell = row.insertCell(-1);
+            cell.className = "pane-bottom label";
+            cell.innerHTML = length;}
+        }
       }
-      list.appendChild(li);
     }
-  },
+  }
 }

@@ -37,6 +37,39 @@ body {
   border-radius: 8px;
 }
 
+.pane-top {
+  border-top: 2px solid #666666;
+}
+.pane-left {
+  border-left: 2px solid #666666;
+}
+.pane-top-left {
+  border-top: 2px solid #666666;
+  border-left: 2px solid #666666;
+  border-top-left-radius: 8px
+}
+.pane-right {
+  border-right: 2px solid #666666;
+}
+.pane-top-right {
+  border-top: 2px solid #666666;
+  border-right: 2px solid #666666;
+  border-top-right-radius: 8px
+}
+.pane-bottom {
+  border-bottom: 2px solid #666666;
+}
+.pane-bottom-left {
+  border-bottom: 2px solid #666666;
+  border-left: 2px solid #666666;
+  border-bottom-left-radius: 8px
+}
+.pane-bottom-right {
+  border-bottom: 2px solid #666666;
+  border-right: 2px solid #666666;
+  border-bottom-right-radius: 8px
+}
+
 .framed {
   background-color: #333333;
   border: 2px solid #FFFFFF;
