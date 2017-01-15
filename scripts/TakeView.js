@@ -15,20 +15,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+"use strict";
 
-var Take = require("Take");
+const Take = require("Take");
 
 module.exports = {
   "getFrameImageURL": function(take, frame) {
-    var imageURL = frame.image;
+    let imageURL = frame.image;
     if (imageURL.indexOf("frame-default.png") < 0) {
       imageURL = "/takes/" + take.dir + "/" + imageURL + "?rnd=" + Math.random();
     }
     return imageURL;
   },
   "getFrameImageObject": function(take, frameNum) {
-    var imageObjectSelector = $("#take-frame-" + frameNum);
-    var imageObject = undefined;
+    const imageObjectSelector = $("#take-frame-" + frameNum);
+    let imageObject = undefined;
     if (imageObjectSelector) {
       imageObject = imageObjectSelector[0];
     } else if ((take.frames) && (take.frames.length > frameNum)) {
@@ -39,32 +40,31 @@ module.exports = {
   },
   "buildTimeLabel": function(time) {
     function pad(num, size) {
-      var s = "000000000" + num;
+      const s = "000000000" + num;
       return s.substr(s.length - size);
     }
-    var min = Math.floor(time / (60 * 1000));
-    var timeSec = (time - (min * 60 * 1000));
-    var sec = Math.floor(timeSec / 1000);
-    var mil = Math.floor(timeSec - (sec * 1000));
-    var timeLabel = pad(min, 2) + ":" + pad(sec, 2) + "." + pad(mil, 4);
+    const min = Math.floor(time / (60 * 1000));
+    const timeSec = (time - (min * 60 * 1000));
+    const sec = Math.floor(timeSec / 1000);
+    const mil = Math.floor(timeSec - (sec * 1000));
+    const timeLabel = pad(min, 2) + ":" + pad(sec, 2) + "." + pad(mil, 4);
     return timeLabel;
   },
-  "drawFrames": function(take, timelineRow, imagesRow, notesRow, onClick) {
-    var timeStep = (1000 / take.fps);
-    var time = 0;
-    var timelineCell = timelineRow.firstChild;
-    var imageCell = imagesRow.firstChild;
-    var noteCell = notesRow.firstChild;
-    for (var i = 0; i <= take.frames.length; i++) {
-      let frameNum = i;
-      var frame = null;
+  "drawFrames": function(take, timelineRow, imagesRow, notesRow, onClick, noteOnChange) {
+    const timeStep = (1000 / take.fps);
+    let time = 0;
+    let timelineCell = timelineRow.firstChild;
+    let imageCell = imagesRow.firstChild;
+    let noteCell = notesRow.firstChild;
+    for (let frameNum = 0; frameNum <= take.frames.length; frameNum++) {
+      let frame = null;
       if (frameNum < take.frames.length) {
         frame = take.frames[frameNum];
       } else {
         frame = Take.getDefaultFrame();
       }
 
-      var timeLabel = this.buildTimeLabel(time);
+      const timeLabel = this.buildTimeLabel(time);
 
       if (!timelineCell) {
         timelineCell = document.createElement("TD");
@@ -89,7 +89,7 @@ module.exports = {
         imageCell.style.cursor = "pointer";
         imageCell.onclick = function() {
           onClick(frameNum);
-        }
+        };
         imagesRow.appendChild(imageCell);
       }
       if (frameNum == take.currentFrame) {
@@ -98,7 +98,7 @@ module.exports = {
         imageCell.style.backgroundColor = "";
       }
       imageCell.innerHTML = ""
-        + "<img id=\"take-frame-" + i + "\" src=\"" + this.getFrameImageURL(take, frame) + "\" width=\"160\" height=\"90\" />"
+        + "<img id=\"take-frame-" + frameNum + "\" src=\"" + this.getFrameImageURL(take, frame) + "\" width=\"160\" height=\"90\" />"
       ;
       imageCell = imageCell.nextSibling;
 
@@ -107,7 +107,12 @@ module.exports = {
         noteCell.align = "left";
         notesRow.appendChild(noteCell);
       }
-      noteCell.innerHTML = "<textarea rows=\"5\" cols=\"15\">" + frame.notes + "</textarea>";
+      let note = document.createElement("textarea");
+      note.value = frame.note;
+      note.onchange = function() {
+        noteOnChange(frameNum, this.value);
+      }
+      noteCell.appendChild(note);
       noteCell = noteCell.nextSibling;
 
       time += timeStep;
@@ -129,7 +134,7 @@ module.exports = {
     }
   },
   "getVideoURL": function(take) {
-    var videoURL = "/takes/" + take.dir + "/" + take.video + "?rnd=" + Math.random();
+    const videoURL = "/takes/" + take.dir + "/" + take.video + "?rnd=" + Math.random();
     return videoURL;
   },
 };

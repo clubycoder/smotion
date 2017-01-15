@@ -96,12 +96,17 @@ function drawFrames() {
     currentTake.currentFrame = frameNum;
     drawFrames();
   }
+  function saveFrameNote(frameNum, note) {
+    currentTake.frames[frameNum].note = note;
+    Take.saveTake(currentTake, function(){});
+  }
   TakeView.drawFrames(
     (currentTake ? currentTake : Take.getEmptyTake()),
     $("#frames-timeline")[0],
     $("#frames-images")[0],
     $("#frames-notes")[0],
-    frameClicked
+    frameClicked,
+    saveFrameNote
   );
 }
 </script>

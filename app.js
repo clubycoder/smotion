@@ -15,18 +15,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+ "use strict";
 
-var path       = require("path");
-var express    = require("express");
-var bodyParser = require('body-parser');
-var handlebars = require('express-handlebars');
+const path       = require("path");
+const express    = require("express");
+const bodyParser = require('body-parser');
+const handlebars = require('express-handlebars');
 
-var package = require("./package.json");
-var config = require("./config/config.json");
-var Take = require("./lib/Take.js");
+const packageInfo = require("./package.json");
+const config = require("./config/config.json");
+const Take = require("./lib/Take.js");
 
 // HTTP Server
-var httpServer = express();
+const httpServer = express();
 httpServer.use(bodyParser.json({limit: "100mb"}));
 httpServer.engine("handlebars", handlebars({
   "defaultLayout": "main",
@@ -46,8 +47,8 @@ httpServer.use(["/favicon*", "/apple-touch-icon-*", "/mstile-*"], function (req,
 });
 
 httpServer.get("/", function(req, res) {
-  var data = {
-    "title": package.description
+  const data = {
+    "title": packageInfo.description
   };
   res.render("home", data);
 });
@@ -59,14 +60,27 @@ httpServer.get("/take/list", function(req, res) {
 });
 
 httpServer.put("/take", function(req, res) {
-	var take = req.body.take;
-	var takeToCopy = req.body.takeToCopy;
+	const take = req.body.take;
+	const takeToCopy = req.body.takeToCopy;
 	console.log("IN: ", JSON.stringify(take, null, 2));
   if (takeToCopy) {
 	   console.log("COPY: ", JSON.stringify(takeToCopy, null, 2));
   }
 	try {
-		var newTake = Take.newTake(config, take, takeToCopy);
+		const newTake = Take.newTake(config, take, takeToCopy);
+		console.log("OUT: ", JSON.stringify(newTake, null, 2));
+		res.send({"take": newTake});
+	} catch (e) {
+		console.log("ERR: ", e.toString());
+		res.send({"err": e.toString()});
+	}
+});
+
+httpServer.post("/take", function(req, res) {
+	const take = req.body.take;
+	console.log("IN: ", JSON.stringify(take, null, 2));
+	try {
+    const newTake = Take.saveTake(config, take);
 		console.log("OUT: ", JSON.stringify(newTake, null, 2));
 		res.send({"take": newTake});
 	} catch (e) {
@@ -76,7 +90,7 @@ httpServer.put("/take", function(req, res) {
 });
 
 httpServer.delete("/take", function(req, res) {
-	var take = req.body.take;
+	const take = req.body.take;
 	console.log("IN: ", JSON.stringify(take, null, 2));
 	try {
 		Take.deleteTake(config, take);
@@ -88,10 +102,10 @@ httpServer.delete("/take", function(req, res) {
 });
 
 httpServer.delete("/take/frame", function(req, res) {
-	var take = req.body.take;
+	const take = req.body.take;
 	console.log("IN: ", JSON.stringify(take, null, 2));
 	try {
-		var newTake = Take.removeCurrentFrame(config, take);
+		const newTake = Take.removeCurrentFrame(config, take);
 		console.log("OUT: ", JSON.stringify(newTake, null, 2));
 		res.send({"take": newTake});
 	} catch (e) {
@@ -101,10 +115,10 @@ httpServer.delete("/take/frame", function(req, res) {
 });
 
 httpServer.put("/take/frame", function(req, res) {
-	var take = req.body.take;
+	const take = req.body.take;
 	console.log("IN: ", JSON.stringify(take, null, 2));
 	try {
-		var newTake = Take.insertAtCurrentFrame(config, take);
+		const newTake = Take.insertAtCurrentFrame(config, take);
 		console.log("OUT: ", JSON.stringify(newTake, null, 2));
 		res.send({"take": newTake});
 	} catch (e) {
@@ -114,12 +128,12 @@ httpServer.put("/take/frame", function(req, res) {
 });
 
 httpServer.post("/take/frame/image", function(req, res) {
-	var take = req.body.take;
-	var data = req.body.data;
+	const take = req.body.take;
+	const data = req.body.data;
 	console.log("IN: ", JSON.stringify(take, null, 2));
 	console.log(data.substr(0,100));
 	try {
-		var newTake = Take.saveCurrentFrameImage(config, take, data);
+		const newTake = Take.saveCurrentFrameImage(config, take, data);
 		console.log("OUT: ", JSON.stringify(newTake, null, 2));
 		res.send({"take": newTake});
 	} catch (e) {
@@ -129,10 +143,10 @@ httpServer.post("/take/frame/image", function(req, res) {
 });
 
 httpServer.post("/take/render", function(req, res) {
-	var take = req.body.take;
+	const take = req.body.take;
 	console.log("IN: ", JSON.stringify(take, null, 2));
 	try {
-		var newTake = Take.render(config, take);
+		const newTake = Take.render(config, take);
 		console.log("OUT: ", JSON.stringify(newTake, null, 2));
 		res.send({"take": newTake});
 	} catch (e) {
@@ -143,5 +157,5 @@ httpServer.post("/take/render", function(req, res) {
 
 httpServer.listen(config.port);
 
-console.log(`${package.description} listening on ${config.port}`);
+console.log(`${packageInfo.description} listening on ${config.port}`);
 console.log("CONFIG: ", JSON.stringify(config, null, 2));

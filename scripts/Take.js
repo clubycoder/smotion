@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var API = require("API");
+const API = require("API");
 
 module.exports = {
   "getEmptyTake": function(scene, takeName, resolution, fps) {
@@ -30,7 +30,7 @@ module.exports = {
     };
   },
   "newTake": function(scene, takeName, resolution, fps, takeToCopy, onNewTake, onError) {
-    var take = this.getEmptyTake(scene, takeName, resolution, fps);
+    const take = this.getEmptyTake(scene, takeName, resolution, fps);
     API.call("/take", "put", {
       "take": take,
       "takeToCopy": (takeToCopy ? takeToCopy : undefined)

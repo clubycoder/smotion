@@ -19,6 +19,7 @@ Functionality
 * Configurable resolution (360p, 720p, or 1080p)
 * Configurable frame-rate (8, 12, 24, 30, or 60)
 * Insert and Remove frames
+* Adding notes to frames for planning
 * Auto-save take with every change, new frame, removed frame, etc
 * Overlay previous frame with configurable transparency (Onion Skinning) per virtual screen
 * Switch screen to live playback per virtual screen
@@ -30,7 +31,6 @@ Coming "Soon"
 
 * Importing external images for frames
 * Integrated frame editing in [Gimp](https://www.gimp.org/)
-* Adding notes to frames for planning
 * Marking screen to plan movement between frames
 * Multiple planning/storyboard layers for more per frame planning
 * Rotoscoping layers
