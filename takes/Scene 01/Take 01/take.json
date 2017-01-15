@@ -3,75 +3,75 @@
   "take": "Take 01",
   "resolution": "720p",
   "fps": 12,
-  "currentFrame": 16,
+  "currentFrame": 0,
   "frames": [
     {
       "image": "images/00000000.png",
-      "notes": ""
+      "note": "Notes about frame 1"
     },
     {
       "image": "images/00000001.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000002.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000003.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000004.png",
-      "notes": ""
+      "note": "Some other notes"
     },
     {
       "image": "images/00000005.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000006.png",
-      "notes": ""
+      "note": "Just keep spinning"
     },
     {
       "image": "images/00000007.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000008.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000009.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000010.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000011.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000012.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000013.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000014.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000015.png",
-      "notes": ""
+      "note": ""
     },
     {
       "image": "images/00000016.png",
-      "notes": ""
+      "note": ""
     }
   ],
   "video": "Scene 01 - Take 01.mp4"
