@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- html {
+html {
   height: 100%;
 }
 
@@ -183,21 +183,21 @@ textarea {
 }
 
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 .modal-content {
-    background-color: #333333;
-    margin: 15% auto; /* 15% from the top and centered */
+  background-color: #333333;
+  margin: 15% auto; /* 15% from the top and centered */
 }
 
 .right-border {
@@ -225,4 +225,24 @@ textarea {
         -ms-user-select: text; /* Internet Explorer/Edge */
             user-select: text; /* Non-prefixed version, currently
                                   not supported by any browser */
+}
+
+.screen {
+  background-color: #333333;
+}
+.screen:fullscreen {
+  width: 100vw;
+  height: 100vh;
+}
+.screen:full-screen {
+  width: 100vw;
+  height: 100vh;
+}
+.screen:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+}
+.screen:-moz-full-screen {
+  width: 100vw;
+  height: 100vh;
 }

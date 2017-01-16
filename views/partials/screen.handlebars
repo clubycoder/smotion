@@ -1,52 +1,75 @@
 <script>
-var Screen = require("Screen");
+let Screen = require("Screen");
+let Fullscreen = require("Fullscreen");
 </script>
 
-<video id="video-{{screenNum}}" autoplay style="display: none;"></video>
-<div style="padding-bottom: 3px;">
-  <i class="fa fa-video-camera"></i>
-  <select id="screen-type-{{screenNum}}">
-    <option value="" SELECTED>None <i class="fa fa-video-camera"></i></option>
-    <option value="playback">Playback</option>
-  </select>
-  <span id="playback-controls-{{screenNum}}" style="display: none;">
-    <button id="playback-left-{{screenNum}}" class="tight"><i class="fa fa-chevron-left"></i></button>
-    <button id="playback-play-pause-{{screenNum}}" class="tight"><i class="fa fa-play"></i></button>
-    <button id="playback-right-{{screenNum}}" class="tight"><i class="fa fa-chevron-right"></i></button>
-  </span>
-  <input type="color" value="#FF0000" id="mark-color-{{screenNum}}" />
+<div id="screen-{{screenNum}}" class="screen">
+  <video id="video-{{screenNum}}" autoplay style="display: none;"></video>
+  <div style="padding-bottom: 3px;">
+    <button id="fullscreen-{{screenNum}}" class="tight"><i class="fa fa-expand"></i></button>
+    <i class="fa fa-video-camera"></i>
+    <select id="screen-type-{{screenNum}}">
+      <option value="" SELECTED>None <i class="fa fa-video-camera"></i></option>
+      <option value="playback">Playback</option>
+    </select>
+    <span id="playback-controls-{{screenNum}}" style="display: none;">
+      <button id="playback-left-{{screenNum}}" class="tight"><i class="fa fa-chevron-left"></i></button>
+      <button id="playback-play-pause-{{screenNum}}" class="tight"><i class="fa fa-play"></i></button>
+      <button id="playback-right-{{screenNum}}" class="tight"><i class="fa fa-chevron-right"></i></button>
+    </span>
+    <input type="color" value="#FF0000" id="mark-color-{{screenNum}}" />
+  </div>
+  <canvas id="canvas-{{screenNum}}" width="640" height="360" class="framed"></canvas><br>
+  <table border="0" cellpadding="2" cellspacing="0">
+    <tr>
+      <td>
+        <span class="label right-border">Last Frame:
+          <input id="last-frame-trans-slider-{{screenNum}}" type="range" min="0" max="100" step="5" value="35" />
+          <input id="last-frame-trans-{{screenNum}}" type="number" min="0" max="100" step="5" value="35" />%
+        </span>
+        <span class="label">Marks:
+          <input id="marks-trans-slider-{{screenNum}}" type="range" min="0" max="100" step="5" value="35" />
+          <input id="marks-trans-{{screenNum}}" type="number" min="0" max="100" step="5" value="35" />%
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button id="capture-frame-{{screenNum}}">Capture Frame <i class="fa fa-camera"></i></button>
+        <button id="reset-marks-{{screenNum}}">Reset Marks <i class="fa fa-eraser"></i></button><br>
+      </td>
+    </tr>
+  </table>
 </div>
-<canvas id="canvas-{{screenNum}}" width="640" height="360" class="framed"></canvas><br>
-<table border="0" cellpadding="2" cellspacing="0">
-  <tr>
-    <td>
-      <span class="label right-border">Last Frame:
-        <input id="last-frame-trans-slider-{{screenNum}}" type="range" min="0" max="100" step="5" value="35" />
-        <input id="last-frame-trans-{{screenNum}}" type="number" min="0" max="100" step="5" value="35" />%
-      </span>
-      <span class="label">Marks:
-        <input id="marks-trans-slider-{{screenNum}}" type="range" min="0" max="100" step="5" value="35" />
-        <input id="marks-trans-{{screenNum}}" type="number" min="0" max="100" step="5" value="35" />%
-      </span>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <button id="capture-frame-{{screenNum}}">Capture Frame <i class="fa fa-camera"></i></button>
-      <button id="reset-marks-{{screenNum}}">Reset Marks <i class="fa fa-eraser"></i></button><br>
-    </td>
-  </tr>
-</table>
 
 <script>
 (function(){
-  var screen = new Screen(
+  const screen = new Screen(
     $("#canvas-{{screenNum}}")[0],
     $("#video-{{screenNum}}")[0]
   );
 
+  $("#fullscreen-{{screenNum}}").on("click", function() {
+    Fullscreen.toggleFullscreen($("#screen-{{screenNum}}")[0]);
+  });
+  Fullscreen.addOnChangeListener(function() {
+    const button = $("#fullscreen-{{screenNum}}")[0];
+    const canvas = $("#canvas-{{screenNum}}")[0];
+    if (Fullscreen.isEnabled()) {
+      button.innerHTML = "<i class=\"fa fa-compress\"></i>";
+      const screenWidth = (window.screen.width - 64);
+      const screenHeight = Screen.ratio16x9.heightFromWidth(screenWidth);
+      canvas.width = screenWidth;
+      canvas.height = screenHeight;
+    } else {
+      button.innerHTML = "<i class=\"fa fa-expand\"></i>";
+      canvas.width = 640;
+      canvas.height = 360;
+    }
+  });
+
   $("#screen-type-{{screenNum}}").on("change", function() {
-    var screenType = this.options[this.selectedIndex].value;
+    const screenType = this.options[this.selectedIndex].value;
     if (screenType == "playback") {
       $("#playback-controls-{{screenNum}}")[0].style.display = "inline";
 
@@ -109,7 +132,7 @@ var Screen = require("Screen");
 })();
 
 $("#capture-frame-{{screenNum}}").on("click", function() {
-  var data = Camera.captureFrame($("#video-{{screenNum}}")[0], currentTake.resolution);
+  const data = Camera.captureFrame($("#video-{{screenNum}}")[0], currentTake.resolution);
   Take.saveCurrentFrameImage(currentTake, data, function(newTake) {
     newTake.currentFrame++;
     takeSetCurrent(newTake);
@@ -118,13 +141,13 @@ $("#capture-frame-{{screenNum}}").on("click", function() {
 
 Camera.getCameras(function(cameras) {
   function addCameraOption(cameraSelect, cameraInfo) {
-    var cameraOption = document.createElement('option');
+    const cameraOption = document.createElement('option');
     cameraOption.value = cameraInfo.id;
     cameraOption.innerHTML = cameraInfo.name;
     cameraSelect.appendChild(cameraOption);
   }
-  for (var i = 0; i < cameras.length; i++) {
-    addCameraOption($("#screen-type-{{screenNum}}")[0], cameras[i]);
+  for (let cameraNum = 0; cameraNum < cameras.length; cameraNum++) {
+    addCameraOption($("#screen-type-{{screenNum}}")[0], cameras[cameraNum]);
   }
 });
 </script>

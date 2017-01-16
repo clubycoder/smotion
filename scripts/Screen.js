@@ -17,6 +17,15 @@ function Screen(canvas, video) {
   this.startDrawing();
 }
 
+Screen.ratio16x9 = {
+  "heightFromWidth": function(width) {
+    return Math.round((width / 16) * 9);
+  },
+  "widthFromHeight": function(height) {
+    return Math.round((height / 9) * 16);
+  }
+};
+
 Screen.prototype.enableVideo = function() {
   this.videoEnabled = true;
 };
