@@ -126,7 +126,7 @@ module.exports = {
             cell.className = "pane-bottom-left label";
             cell.innerHTML = "Length:";}
           {let cell = row.insertCell(-1);
-            cell.className = "pane-bottom label";
+            cell.className = "pane-bottom";
             cell.innerHTML = length;}
         }
       }

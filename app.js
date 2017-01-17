@@ -39,16 +39,19 @@ httpServer.engine("handlebars", handlebars({
 }));
 httpServer.set("view engine", "handlebars");
 
-httpServer.use("/styles", express.static(path.join(__dirname, "styles")));
+httpServer.use("/styles", express.static(path.join(__dirname, "site/styles")));
 httpServer.use("/images", express.static(path.join(__dirname, "images")));
 httpServer.use("/scripts", express.static(path.join(__dirname, "scripts")));
 httpServer.use(["/favicon*", "/apple-touch-icon-*", "/mstile-*"], function (req, res) {
-  res.sendFile(path.join(__dirname, "images/favicon" + req.originalUrl));
+  res.sendFile(path.join(__dirname, "site" + req.originalUrl));
 });
+
+httpServer.use("/help", express.static(path.join(__dirname, "site")));
 
 httpServer.get("/", function(req, res) {
   const data = {
-    "title": packageInfo.description
+    "title": `${packageInfo.description} (v${packageInfo.version})`,
+    "version": `${packageInfo.version}`
   };
   res.render("home", data);
 });

@@ -29,7 +29,20 @@ body {
 }
 
 .label {
+  color: #FFFFFF;
   font-weight: bold;
+}
+
+.label-fancy {
+  color: #307730;
+  font-weight: bold;
+  -webkit-text-stroke: 1px #75ab75;
+  text-shadow:
+    3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .pane {

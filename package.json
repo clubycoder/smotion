@@ -1,6 +1,6 @@
 {
   "name": "smotion",
-  "version": "1.0.0",
+  "version": "0.8.0",
   "description": "Stop Motion Animation in a Web Browser",
   "main": "app.js",
   "scripts": {
